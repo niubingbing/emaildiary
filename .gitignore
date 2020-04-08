@@ -8,10 +8,8 @@
 *.pyc
 .idea/
 venv/
-migrations/
 __pycache__/
 private_config.py
-local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media

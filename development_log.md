@@ -1,8 +1,11 @@
-## EmailDiary 咕咕咕团队的不咕记录
+# EmailDiary 咕咕咕团队的不咕记录
 
+- [队员开发日志](#队员开发日志)
 - [版本控制](#版本控制)
-
 - [争议排除](#争议排除)
+- [推荐阅读](#推荐阅读)
+- [组会记录](#组会记录)
+  - [第八周](#第八周)
 
 ## 队员开发日志
 
@@ -28,7 +31,7 @@
 
 3. 每次开发一个功能或者修复一个 Bug 新建一个分支，在分支里进行开发。（如果你为了省事非得在 master 分支上开发我也没看不出来，不过建议使用分支开发。—— 陈一）
 
-4. 切换分支的时候保持工作区和暂存区干净，即完成所有 add 和 commit 操作。
+4. 切换分支的时候保持工作区和暂存区干净，即完成所有 add 和 commit 操作。如果使用 GitHub Desktop，则无需注意这个问题。
 
    工作区：本地文件系统。
 
@@ -36,7 +39,9 @@
 
 5. Github 仓库采用 [压缩合并提交](https://help.github.com/cn/github/administering-a-repository/about-merge-methods-on-github#squashing-your-merge-commits)，开发时可以随意 commit，提交 PR 后 merge 只会保留一条 commit 记录。每完成一个完整的功能记得及时 merge，否则最后的版本控制里看不到中间的 commit。
 
-6. 新建了一个 test 仓库以供测试。
+6. 尽管有 .gitignore，但难免有漏网之鱼。每次 commit 时请注意查看文件的变动，不要提交临时文件和涉及隐私的文件。
+
+7. 新建了一个 test 仓库以供测试。
 
 ## 争议排除
 
@@ -54,6 +59,7 @@
 
 **通用**
 
+- [EmailDiary 的错误代码](backend/backend/error_messages.py)
 - [EmailDiary 的 GraphQL 参考示例](https://gist.github.com/cycychenyi/636a01657b4c48fc3e040a3306f0b626)
 - [JSON Web Token 入门教程](https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html)
 
@@ -65,3 +71,13 @@
 - [GraphQL 官网](https://graphql.cn/)
 - [Graphene-Django 官网](https://docs.graphene-python.org/projects/django/en/latest/)
 - [Django GraphQL JWT 官网](https://django-graphql-jwt.domake.io/en/latest/)
+
+## 组会记录
+
+*注：如果图片太小，可以右键「在新标签页中打开图片」*
+
+*再注：图片是透明的，关于深色模式下观看不便的问题请自行解决。*
+
+#### 第八周
+
+<div align="center"><img src="http://qn.cycychenyi.com/emaildiary/weekly-08.png" alt="weekly-08.png" /></div>
