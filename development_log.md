@@ -10,6 +10,7 @@
 ## 队员开发日志
 
 - [陈一](https://gist.github.com/cycychenyi/86ded7116028fb96c244d69c2d355407)
+- [张心蕊](https://gist.github.com/XinRuiiii/b3fe67a15d8660d44f1dbc3d506966e7)
 
 **请大家先认真看完「不咕记录」，加上自己的开发日志链接，提交首次 PR。**
 
