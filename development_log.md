@@ -11,6 +11,7 @@
 
 - [陈一](https://gist.github.com/cycychenyi/86ded7116028fb96c244d69c2d355407)
 - [张心蕊](https://gist.github.com/XinRuiiii/b3fe67a15d8660d44f1dbc3d506966e7)
+- [牛冰冰](https://gist.github.com/niubingbing/056fbfe640b0a8ce901fc110aeab88cc)
 
 **请大家先认真看完「不咕记录」，加上自己的开发日志链接，提交首次 PR。**
 
@@ -65,6 +66,12 @@
 - [JSON Web Token 入门教程](https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html)
 
 **前端**
+
+- [wired-element 文档](https://github.com/wiredjs/wired-elements)
+- [wired-element 示例](https://wiredjs.com/showcase.html)
+- [Vue 中文文档](https://cn.vuejs.org/v2/guide/)
+  - 建议前端同学不要跟着文档用 HBuider X，统一使用 WebStorm 建立 Vue 项目
+  - [WebStorm 中使用 Vue 入门教程]([https://blog.jetbrains.com/cn/2019/06/%E5%9C%A8-webstorm-%E4%B8%AD%E4%BB%A5-vue-js-%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8%E5%85%A5%E9%97%A8/](https://blog.jetbrains.com/cn/2019/06/在-webstorm-中以-vue-js-构建应用入门/))
 
 **后端**
 
