@@ -35,8 +35,19 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     # 自定义用户
 
-    email: str = models.EmailField(verbose_name='Email address', max_length=320, unique=True, null=True)
-    name: str = models.CharField(max_length=32)
+    email = models.EmailField(verbose_name='Email address', max_length=320, unique=True)
+    name = models.CharField(max_length=32)
+
+    # 邮件提醒，默认开启每日提醒
+    daily_remind = models.BooleanField(default=True)
+    weekly_remind = models.BooleanField(default=False)
+    monthly_remind = models.BooleanField(default=False)
+    yearly_remind = models.BooleanField(default=False)
+
+    # 统计数据，默认开启年报订阅
+    weekly_report = models.BooleanField(default=False)
+    monthly_report = models.BooleanField(default=False)
+    yearly_report = models.BooleanField(default=True)
 
     # 删除用户时可以仅把 is_active 设置为 False，不真正删除用户
     is_active = models.BooleanField(default=True)
@@ -62,9 +73,8 @@ class User(AbstractBaseUser):
 
 class Diary(models.Model):
     user: User = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='diaries')
-    # user: User = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='%(class)s')
-    title: str = models.TextField(blank=True)
-    content: str = models.TextField(blank=True)
+    title: str = models.TextField()
+    content: str = models.TextField()
     release_time: datetime.datetime = models.DateTimeField(auto_now=True)
     update_time: datetime.datetime = models.DateTimeField(auto_now_add=True)
 

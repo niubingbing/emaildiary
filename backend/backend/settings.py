@@ -16,7 +16,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 from datetime import timedelta
 
-from private_config import DATABASE, DATABASE_PASSWORD, DATABASE_USER
+from private_config import database_name, database_user, database_password, hosts
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,7 +30,7 @@ SECRET_KEY = 'sj8+)sjp-ap*bj(e@m^pv8yoqvaodce6-f(=+04ke)a3&%l&3+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = hosts
 
 # Application definition
 
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'graphene_django',
     # 'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
     # 'corsheaders',
-    # 'django_apscheduler',
+    'django_apscheduler',
     'emaildiary.apps.EmaildiaryConfig',
 ]
 
@@ -85,9 +85,9 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DATABASE,
-        'USER': DATABASE_USER,
-        'PASSWORD': DATABASE_PASSWORD,
+        'NAME': database_name,
+        'USER': database_user,
+        'PASSWORD': database_password,
     }
 }
 
@@ -129,6 +129,7 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'emaildiary.User'
 
+# GraphQL
 GRAPHENE = {
     'SCHEMA': 'backend.schema.schema',
     'MIDDLEWARE': [
@@ -136,6 +137,7 @@ GRAPHENE = {
     ],
 }
 
+# JWT
 AUTHENTICATION_BACKENDS = [
     'graphql_jwt.backends.JSONWebTokenBackend',
     'django.contrib.auth.backends.ModelBackend',

@@ -1,5 +1,6 @@
 # #!/usr/bin/env python3
 # # -*- coding: utf-8 -*-
+import datetime
 import json
 
 import graphene
@@ -31,8 +32,6 @@ class ErrorMessage:
 class UserType(DjangoObjectType):
     class Meta:
         model = User
-        # filter_fields = {'name': ['exact', 'icontains', 'istartswith'],
-        #                  'customer': ['exact', 'icontains', 'istartswith']}
 
 
 class DiaryType(DjangoObjectType):
@@ -50,7 +49,7 @@ class CreateUser(graphene.Mutation):
         password = graphene.String(required=True)
         name = graphene.String(required=True)
 
-    def mutate(self, info, email, password, name):
+    def mutate(self, info, email: str, password: str, name: str) -> 'CreateUser':
         if User.objects.filter(email=email):
             raise GraphQLError(str(ErrorMessage(
                 code=USER_ALREADY_EXIST_CODE,
@@ -76,7 +75,7 @@ class UpdateUser(graphene.Mutation):
         name = graphene.String()
 
     @login_required
-    def mutate(self, info, **kwargs):
+    def mutate(self, info, **kwargs) -> 'UpdateUser':
         user = info.context.user
         if 'password' in kwargs:
             user.set_password(kwargs['password'])
@@ -85,6 +84,20 @@ class UpdateUser(graphene.Mutation):
         user.save()
 
         return UpdateUser(user=user)
+
+
+class DeleteUser(graphene.Mutation):
+    # 删除用户，仅将 is_active 设置为 False，没有从数据库删除
+
+    user = graphene.Field(UserType)
+
+    @login_required
+    def mutate(self, info) -> 'DeleteUser':
+        user = info.context.user
+        user.is_active = False
+        user.save()
+
+        return DeleteUser(user=user)
 
 
 class CreateDiary(graphene.Mutation):
@@ -97,24 +110,10 @@ class CreateDiary(graphene.Mutation):
         content = graphene.String(required=True)
 
     @login_required
-    def mutate(self, info, title, content):
+    def mutate(self, info, title: str, content: str) -> 'CreateDiary':
         diary = info.context.user.diaries.create(title=title, content=content)
 
         return CreateDiary(diary=diary)
-
-
-class DeleteUser(graphene.Mutation):
-    # 删除用户，仅将 is_active 设置为 False，没有从数据库删除
-
-    user = graphene.Field(UserType)
-
-    @login_required
-    def mutate(self, info, release_time):
-        user = info.context.user
-        user.is_active = False
-        user.save()
-
-        return DeleteUser(user=user)
 
 
 class UpdateDiary(graphene.Mutation):
@@ -128,7 +127,7 @@ class UpdateDiary(graphene.Mutation):
         content = graphene.String()
 
     @login_required
-    def mutate(self, info, release_time, **kwargs):
+    def mutate(self, info, release_time: datetime.datetime, **kwargs) -> 'UpdateDiary':
         diary = info.context.user.diaries.get(release_time=release_time)
         if 'title' in kwargs:
             diary.title = kwargs['title']
@@ -148,7 +147,7 @@ class DeleteDiary(graphene.Mutation):
         release_time = graphene.DateTime(required=True)
 
     @login_required
-    def mutate(self, info, release_time):
+    def mutate(self, info, release_time: datetime.datetime) -> 'DeleteDiary':
         diary = info.context.user.diaries.get(release_time=release_time)
         diary.delete()
 
@@ -177,9 +176,10 @@ class Mutations(graphene.ObjectType):
     refresh_token = graphql_jwt.Refresh.Field(description='刷新 JWT Token，普通用户即可访问。')
     revoke_token = graphql_jwt.Revoke.Field(description='撤销 JWT Token，普通用户即可访问。')
 
+    # 用户相关操作
     create_user = CreateUser.Field(
         description=f'创建用户，匿名用户可访问。\n'
-                    '如果该邮箱已注册，返回错误代码 {USER_ALREADY_EXIST_CODE}。'
+                    f'如果该邮箱已注册，返回错误代码 {USER_ALREADY_EXIST_CODE}。'
     )
     update_user = UpdateUser.Field(
         description='更新用户，普通用户可访问。'
@@ -187,6 +187,8 @@ class Mutations(graphene.ObjectType):
     delete_user = DeleteUser.Field(
         description='删除用户，普通用户可访问。'
     )
+
+    # 日记相关操作
     create_diary = CreateDiary.Field(
         description='创建日记，如果没有则创建，普通用户可访问。'
     )
