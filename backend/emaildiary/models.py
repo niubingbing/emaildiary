@@ -75,8 +75,8 @@ class Diary(models.Model):
     user: User = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='diaries')
     title: str = models.TextField()
     content: str = models.TextField()
-    release_time: datetime.datetime = models.DateTimeField(auto_now=True)
-    update_time: datetime.datetime = models.DateTimeField(auto_now_add=True)
+    release_time: datetime.datetime = models.DateTimeField(auto_now_add=True)
+    update_time: datetime.datetime = models.DateTimeField(auto_now=True)
 
     class Meta:
         # 二元组 (用户, 发布时间) 作为日记的主键 / 唯一标识
