@@ -2,7 +2,8 @@ import Router from 'vue-router'
 import Index from './components/pages/Index'
 import Vue from 'vue'
 import sendDiaryView from './components/pages/SendDiaryView'
-
+import EditTest from "./components/pages/EditTest"
+import SignInOrUp from "./components/pages/SignInOrUp";
 
 Vue.use(Router);
 
@@ -19,6 +20,16 @@ export default new Router({
             path: '/sendDiary',
             name: 'sendDiary',
             component: sendDiaryView
+        },
+        {
+            path: '/edit',
+            name: 'edit',
+            component: EditTest
+        },
+        {
+            path: '/signIn',
+            name: 'signIn',
+            component: SignInOrUp
         },
     ]
 })
