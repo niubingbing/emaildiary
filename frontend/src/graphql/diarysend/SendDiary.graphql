@@ -1,0 +1,8 @@
+mutation createDiary($diaryTitle: String!,$diaryText: String!) {
+    createDiary(title:$diaryTitle, content:$diaryText) {
+        diary {
+            title
+            content
+        }
+    }
+}
