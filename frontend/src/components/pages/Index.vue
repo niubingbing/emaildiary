@@ -14,7 +14,6 @@
             </router-link>
             <!--            <index-calendar></index-calendar>-->
             <index-spirit></index-spirit>
-            <!--            <index-weather></index-weather>-->
         </div>
 
     </div>
@@ -23,9 +22,7 @@
 <script>
     import DiaryList from "./IndexComponents/DiaryList";
     import Avatar from "./IndexComponents/Avatar";
-    // import Weather from "./IndexComponents/Weather";
     import SpiritList from "./IndexComponents/SpiritList";
-    // import Calendar from "./IndexComponents/Calendar";
     import {library} from '@fortawesome/fontawesome-svg-core'
     import {faPencilAlt} from '@fortawesome/free-solid-svg-icons'
 
@@ -38,9 +35,7 @@
         components: {
             'index-diary': DiaryList,
             'index-avatar': Avatar,
-            // 'index-weather': Weather,
             'index-spirit': SpiritList,
-            // 'index-calendar': Calendar
         }
     }
 </script>

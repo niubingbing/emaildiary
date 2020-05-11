@@ -31,8 +31,8 @@
                 diaryTitle: '',
                 diaryText: '',
                 // TODO 开发时暂时使用，后续修改
-                email: '',
-                password: ''
+                email: '2017302580071@whu.edu.cn',
+                password: '34556789'
             }
         },
         methods: {
