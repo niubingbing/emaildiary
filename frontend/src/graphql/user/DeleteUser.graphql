@@ -1,10 +1,8 @@
 mutation DeleteUser {
     # 注销
     deleteUser {
-        user {
-            isActive
-            # true 表示当前用户有效，可以登录
-            # false 表示已注销，但数据还在，将来可以写 30 天内允许恢复
-        }
+        success
+        # true 表示当前用户有效，可以登录
+        # false 表示已注销，但数据还在，将来可以写 30 天内允许恢复
     }
 }

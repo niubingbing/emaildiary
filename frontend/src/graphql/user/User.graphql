@@ -1,0 +1,16 @@
+query User {
+    # 相当于登录的第二步，获取邮箱、用户名（昵称）
+    # 第一步是 Token Auth
+    user {
+        email
+        name
+        password
+        dailyRemind
+        weeklyRemind
+        monthlyRemind
+        yearlyRemind
+        weeklyReport
+        monthlyReport
+        yearlyReport
+    }
+}

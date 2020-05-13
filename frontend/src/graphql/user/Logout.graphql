@@ -1,0 +1,6 @@
+mutation RevokeToken($refreshToken: String!) {
+    # 登出
+    revokeToken(refreshToken: $refreshToken) {
+        revoked
+    }
+}

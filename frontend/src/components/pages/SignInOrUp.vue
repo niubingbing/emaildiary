@@ -18,6 +18,10 @@
         <!--        注销用户控件-->
         <wired-button id="deleteBtn" v-on:click="del">注销用户</wired-button>
         <!--        注销用户控件-->
+
+        <!--        退出登录控件-->
+        <wired-button id="logoutBtn" v-on:click="logout">退出登录</wired-button>
+        <!--        退出登录控件-->
     </div>
 </template>
 
@@ -25,6 +29,7 @@
     import CreateUser from '../../graphql/user/CreateUser.graphql'
     import Login from '../../graphql/user/Login.graphql'
     import DeleteUser from '../../graphql/user/DeleteUser.graphql'
+    import Logout from '../../graphql/user/Logout.graphql'
 
     export default {
         name: "SignInOrUp",
@@ -50,14 +55,14 @@
                         }
                     })
                     .then(result => {
-                        if (result.data.createUser.user.isActive) {
+                        if (result.data.createUser.success) {
                             alert('注册成功')
                         } else {
                             alert('注册失败')
                         }
                     })
                     .catch((error) => {
-                        alert(error.message)
+                        console.log(error.message)
                     })
             },
             login() {
@@ -70,9 +75,18 @@
                         },
                     })
                     .then(result => {
-                        window.localStorage['token'] = result.data.tokenAuth.token;
-                        window.localStorage['refreshToken'] = result.data.tokenAuth.refreshToken;
+                        localStorage.setItem('exp', result.data.tokenAuth.payload.exp);
+                        localStorage.setItem('email', result.data.tokenAuth.payload.email);
+                        localStorage.setItem('origIat', result.data.tokenAuth.payload.origIat);
+                        localStorage.setItem('token', result.data.tokenAuth.token);
+                        localStorage.setItem('refreshToken', result.data.tokenAuth.refreshToken);
+                        localStorage.setItem('refreshExpiresIn', result.data.tokenAuth.refreshExpiresIn);
+                        console.log('登录获取到的payload:', JSON.stringify(result.data.tokenAuth.payload));
+                        console.log('登录获取到的token:', result.data.tokenAuth.token);
+                        console.log('登录获取到的refreshToken:', result.data.tokenAuth.refreshToken);
+                        console.log('登录获取到的refreshExpiresIn:', result.data.tokenAuth.refreshExpiresIn);
                         alert('登录成功，token & refreshToken 已保存。');
+                        this.$router.go(-1);
                     })
                     .catch((error) => {
                         alert('登录失败。');
@@ -85,14 +99,38 @@
                         mutation: DeleteUser
                     })
                     .then((result) => {
-                        if (result.data.deleteUser.user.isActive) {
-                            alert('注销失败')
+                        if (result.data.deleteUser.success) {
+                            alert('注销成功')
                         } else {
-                            alert('注销成功');
+                            alert('注销失败');
                         }
                     })
                     .catch((error) => {
                         console.log(error.message)
+                    })
+            },
+            logout() {
+                const refreshToken = localStorage.getItem('refreshToken');
+                console.log('退出登录时获取的refreshToken:', refreshToken)
+                this.$apollo
+                    .mutate({
+                        mutation: Logout,
+                        variables:{
+                            refreshToken: refreshToken
+                        }
+                    })
+                    .then(() => {
+                        localStorage.setItem('exp', '');
+                        localStorage.setItem('email', '');
+                        localStorage.setItem('origIat', '');
+                        localStorage.setItem('token', '');
+                        localStorage.setItem('refreshToken', '');
+                        localStorage.setItem('refreshExpiresIn', '');
+                        alert('已退出登录并清空存储信息');
+                    })
+                    .catch((error)=>{
+                        alert('退出失败');
+                        console.log('退出登录失败原因：',error.message)
                     })
             }
         }
@@ -147,9 +185,15 @@
         margin-top: 140px;
     }
 
-    #deleteBtn{
+    #deleteBtn {
         position: absolute;
         margin-left: 590px;
         margin-top: 190px;
+    }
+
+    #logoutBtn{
+        position: absolute;
+        margin-left: 590px;
+        margin-top: 240px;
     }
 </style>

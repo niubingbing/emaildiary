@@ -1,0 +1,10 @@
+mutation UpdateUser($name: String, $password: String!, $dailyRemind: Boolean, $weeklyRemind: Boolean,
+    $monthlyRemind: Boolean, $yearlyRemind: Boolean, $weeklyReport: Boolean, $monthlyReport: Boolean,
+    $yearlyReport: Boolean) {
+    # 修改信息
+    updateUser (name: $name, password: $password, dailyRemind: $dailyRemind, weeklyRemind: $weeklyRemind,
+    monthlyRemind: $monthlyRemind, yearlyRemind: $yearlyRemind, weeklyReport: $weeklyReport, monthlyReport: $monthlyReport,
+        yearlyReport: $yearlyReport) {
+        success
+    }
+}
