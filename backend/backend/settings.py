@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'graphene_django',
-    # 'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
-    # 'corsheaders',
+    'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
+    'corsheaders',
     'django_apscheduler',
     'emaildiary.apps.EmaildiaryConfig',
 ]
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',  # TODO: CSRF 认证
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -143,14 +144,12 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-# GRAPHQL_JWT = {
-#     'JWT_VERIFY_EXPIRATION': True,
-#     'JWT_LONG_RUNNING_REFRESH_TOKEN': True,
-#     'JWT_EXPIRATION_DELTA': timedelta(minutes=5),
-#     'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
-# }
+GRAPHQL_JWT = {
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_LONG_RUNNING_REFRESH_TOKEN': True,
+    'JWT_EXPIRATION_DELTA': timedelta(minutes=5),
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
+}
 
-# CORS_ORIGIN_WHITELIST = [
-#     'http://localhost:8080',  # TODO: 生产时改为 80 端口
-#     'http://127.0.0.1:8080',
-# ]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
