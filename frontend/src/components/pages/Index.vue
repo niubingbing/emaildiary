@@ -9,9 +9,7 @@
         <!--        跳转去日记编写页面的按钮结束-->
 
         <!--        跳转去设置页面-->
-        <router-link to="/set">
-            <wired-button id="setBtn">资料设置</wired-button>
-        </router-link>
+            <wired-button id="setBtn" v-on:click="$router.push('/set')">资料设置</wired-button>
         <!--        跳转去设置页面结束-->
 
         <div class="box">
@@ -24,11 +22,8 @@
             <!--            显示最近 16 条日记的列表结束-->
 
 
-            <!--             TODO: 后期要把这四个按钮做成一个下拉列表，登录/注册单独成页面，注销账号放在设置页面中-->
             <!--           跳转到登录/登出/注册/注销页面-->
-            <router-link to="/signIn">
                 <index-avatar></index-avatar>
-            </router-link>
             <!--            跳转到登录/登出/注册/注销页面-->
 
             <!--            日历-->

@@ -19,13 +19,19 @@
         <wired-button id="alterInfoBtn" v-on:click="alterInfo">保存更改</wired-button>
 
         <!--        更改个人信息控件-->
+
+        <!--        注销用户控件-->
+        <wired-button id="deleteBtn" v-on:click="del">注销用户</wired-button>
+        <!--        注销用户控件-->
     </div>
 </template>
 
 <script>
     import ShowUser from '../../graphql/user/User.graphql'
-    import RefreshToken from '../../graphql/user/RefreshToken.graphql'
     import UpdateUser from '../../graphql/user/UpdateUser.graphql'
+    import {getToken} from '../../getToken'
+    import DeleteUser from '../../graphql/user/DeleteUser.graphql'
+
 
     export default {
         name: "UserSet",
@@ -36,57 +42,10 @@
             }
         },
         methods: {
-            updateToken() {
-                const refreshToken = localStorage.getItem('refreshToken');
-                this.$apollo
-                    .mutate({
-                        mutation: RefreshToken,
-                        variables: {
-                            refreshToken: refreshToken
-                        }
-                    })
-                    .then(result => {
-                        // 把刷新的 token 等信息重新存储，覆盖旧信息
-                        localStorage.setItem('exp', result.data.refreshToken.payload.exp);
-                        localStorage.setItem('email', result.data.refreshToken.payload.email);
-                        localStorage.setItem('origIat', result.data.refreshToken.payload.origIat);
-                        localStorage.setItem('token', result.data.refreshToken.token);
-                        localStorage.setItem('refreshToken', result.data.refreshToken.refreshToken);
-                        localStorage.setItem('refreshExpiresIn', result.data.refreshToken.refreshExpiresIn);
-                        console.log('更新后的exp:', result.data.refreshToken.payload.exp)
-                    })
-                    .catch((error) => {
-                        console.log(error.message())
-                    })
-            },
-            getCurrentTime() {
-                let currentTime = ((new Date()).valueOf()) / 1000;
-                console.log('currentTime:', currentTime)
-                return currentTime
-            },
-            getToken() {
-                const exp = localStorage.getItem('exp');
-                const refreshExpiresIn = localStorage.getItem('refreshExpiresIn');
-                console.log('exp - 30:', exp - 30)
-                console.log('refreshExpiresIn - 60', refreshExpiresIn - 60)
-                // payload 为空说明用户已经退出登录
-                if (exp === '') {
-                    alert('您尚未登录，请先登录！')
-                    this.$router.push({path: '/signIn'})
-                } else if (this.getCurrentTime() < (exp - 30)) {
-                    // 当前时间戳小于 token 过期时间戳，说明 token 没过期
-                } else if (this.getCurrentTime() < (refreshExpiresIn - 60)) {
-                    // 当前时间戳大于等于 token 过期时间戳，但小于 refreshToken 时间戳
-                    // 说明 token 过期，但是 refreshToken 没过期
-                    this.updateToken();
-                } else {
-                    // refreshToken 和 token 都过期了
-                    alert('登录信息已过期，请先登录！')
-                    this.$router.push({path: '/signIn'})
+            async showInfo() {
+                if (!await getToken()) {
+                    return
                 }
-            },
-            showInfo() {
-                this.getToken();
                 this.$apollo
                     .mutate({
                         mutation: ShowUser
@@ -104,9 +63,9 @@
                         } else if (result.data.user.yearlyRemind) {
                             document.getElementById("showRemind").innerHTML = "Remind yearly";
                         }
-                        if(result.data.user.weeklyReport){
+                        if (result.data.user.weeklyReport) {
                             document.getElementById("showReport").innerHTML = "Report weekly";
-                        }else if (result.data.user.monthlyReport) {
+                        } else if (result.data.user.monthlyReport) {
                             document.getElementById("showReport").innerHTML = "Report monthly";
                         } else if (result.data.user.yearlyReport) {
                             document.getElementById("showReport").innerHTML = "Report yearly";
@@ -131,6 +90,25 @@
                             alert('修改成功')
                         } else {
                             alert('修改失败')
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error.message)
+                    })
+            },
+            async del() {
+                if (!await getToken()) {
+                    return
+                }
+                this.$apollo
+                    .mutate({
+                        mutation: DeleteUser
+                    })
+                    .then((result) => {
+                        if (result.data.deleteUser.success) {
+                            alert('注销成功')
+                        } else {
+                            alert('注销失败');
                         }
                     })
                     .catch((error) => {
@@ -174,5 +152,11 @@
         position: absolute;
         margin-top: 340px;
         margin-left: 130px;
+    }
+
+    #deleteBtn {
+        position: absolute;
+        margin-left: 590px;
+        margin-top: 190px;
     }
 </style>
