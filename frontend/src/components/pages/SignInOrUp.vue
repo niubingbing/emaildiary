@@ -3,17 +3,17 @@
         <wired-card id="box" elevation="4"></wired-card>
         <wired-card id="background" fill="#6495ED">
         </wired-card>
-        <img src="../../assets/images/logo3.png" id="logo">
-        <wired-button id="inBtn" v-on:click="sUp=false" elevation="4">
-            <div style="width: 200px">
+        <img src="../../assets/images/logo.png" id="logo">
+        <div v-if="sUp">
+            <wired-button id="inBtn" v-on:click="sUp=false" elevation="3">
                 登录
-            </div>
-        </wired-button>
-        <wired-button id="upBtn" v-on:click="sUp=true" elevation="4">
-            <div style="width: 200px">
+            </wired-button>
+        </div>
+        <div v-else>
+            <wired-button id="upBtn" v-on:click="sUp=true" elevation="3">
                 注册
-            </div>
-        </wired-button>
+            </wired-button>
+        </div>
         <div v-if="sUp">
             <sign-up></sign-up>
         </div>
@@ -65,8 +65,8 @@
 
     #inBtn {
         position: absolute;
-        margin-left: 28%;
-        margin-top: 20%;
+        margin-left: 88%;
+        margin-top: 4%;
     }
 
     #inBtn:hover {
@@ -75,8 +75,8 @@
 
     #upBtn {
         position: absolute;
-        margin-left: 55%;
-        margin-top: 20%;
+        margin-left: 88%;
+        margin-top: 4%;
     }
 
     #upBtn:hover {
@@ -92,10 +92,6 @@
 
     }
 
-    .inOrUp {
-        position: absolute;
-    }
-
     #boy {
         position: absolute;
         margin-left: 6%;
@@ -103,7 +99,7 @@
         margin-top: 32.5%;
     }
 
-    #girl{
+    #girl {
         position: absolute;
         margin-left: 80%;
         width: 15%;

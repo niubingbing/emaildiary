@@ -3,9 +3,18 @@
         <!--        登录控件-->
         <wired-input id="emailInputLogin" :value="emailLogin" @input="emailLogin=$event.target.value"
                      placeholder="请输入登录邮箱"/>
+        <div v-if="emailNotValid()">
+            <h5 id="emailAttention">
+                * 您的邮箱格式不正确，请检查邮箱格式
+            </h5>
+        </div>
         <wired-input type="password" id="pswInputLogin" :value="pswLogin" @input="pswLogin=$event.target.value"
                      placeholder="请输入登录密码"/>
-        <wired-button id="loginBtn" v-on:click="login">登录</wired-button>
+        <wired-button id="loginBtn" v-on:click="login">
+            <div style="width: 100px">
+                登录
+            </div>
+        </wired-button>
         <!--        登录控件-->
     </div>
 </template>
@@ -22,6 +31,10 @@
             }
         },
         methods: {
+            emailNotValid() {
+                const pat = /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/
+                return !pat.test(this.emailLogin);
+            },
             login() {
                 this.$apollo
                     .mutate({
@@ -55,21 +68,32 @@
 <style scoped>
     #emailInputLogin {
         position: absolute;
-        margin-left: 430px;
-        margin-top: 25%;
+        margin-left: 432px;
+        margin-top: 23%;
         width: 30%;
+    }
+
+    #emailAttention{
+        position: absolute;
+        margin-left: 433px;
+        margin-top: 28%;
+        color: red;
     }
 
     #pswInputLogin {
         position: absolute;
-        margin-left: 430px;
-        margin-top: 32%;
+        margin-left: 432px;
+        margin-top: 30%;
         width: 30%;
     }
 
     #loginBtn {
         position: absolute;
-        margin-left: 600px;
+        margin-left: 555px;
         margin-top: 37%;
+    }
+
+    #loginBtn:hover {
+        background-color: #6495ED;
     }
 </style>

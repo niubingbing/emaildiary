@@ -1,8 +1,9 @@
-mutation CreateUser($email: String!, $name: String, $password: String!) {
+mutation CreateUser($email: String!, $name: String, $password: String!, $code: String!) {
     # 注册
-    createUser (email: $email, name: $name, password: $password) {
+    createUser (email: $email, name: $name, password: $password, code: $code) {
         success
         # true 表示当前用户有效，可以登录
         # false 表示已注销，但数据还在，将来可以写 30 天内允许恢复
+
     }
 }

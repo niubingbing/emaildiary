@@ -1,0 +1,5 @@
+mutation GetCodeWhenCreate($email: String!) {
+    getCodeWhenCreate (email: $email) {
+        success
+    }
+}

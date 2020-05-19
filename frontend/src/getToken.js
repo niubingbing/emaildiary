@@ -2,7 +2,9 @@ import RefreshToken from "./graphql/user/RefreshToken.graphql";
 import apolloProvider from "./apollo";
 import router from "./router";
 
-let getCurrentTime = ((new Date()).valueOf()) / 1000
+function getCurrentTime() {
+    return ((new Date()).valueOf()) / 1000
+}
 
 export async function getToken() {
     // TODO 全局函数用于token检验，时间戳检验待完成
@@ -25,7 +27,7 @@ export async function getToken() {
         console.log('token已过期，updateToken')
         let state
         await updateToken().then(value => {
-                state=value
+                state = value
             }
         )
         console.log('state' + state)
